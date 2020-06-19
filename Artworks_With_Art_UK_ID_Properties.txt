@@ -1,0 +1,14 @@
+#defaultView:ImageGrid
+#Use this query to return all objects that have an Art UK Identifier linked to them
+
+SELECT DISTINCT ?item ?itemLabel ?itemDescription ?image ?ArtUK WHERE {
+    ?item wdt:P31/wdt:P279* wd:Q860861 . # Get items that are instances or subclasses of a type. Use Visual artwork or work of art, or can narrow down (example uses sculpture)
+    #?item wdt:P170 wd:Q5598 #Use this to restrict to works by a given creator
+          ?item wdt:P1679 ?ArtUK . # That have an Art UK Artwork ID attached
+
+    OPTIONAL { ?item wdt:P18 ?image
+             
+             } # Optionally with an image
+
+    SERVICE wikibase:label { bd:serviceParam wikibase:language "[AUTO_LANGUAGE]" }
+}
